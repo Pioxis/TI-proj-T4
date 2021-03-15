@@ -22,8 +22,8 @@ Po wczytaniu pliku program powinien weryfikować błędy, np przydział dla "Odd
 
 Wynik powinien zawierać poukładane w kolejności podsieci z wcięciami tak jak na przykładzie powyżej (czyli jeśli jakaś podsieć zawiera się w innej to powinno to być poukładane jak w przykładzie. Wynik powinien zawierać komentarze jakie są dopisane do podsieci. W wyniku dobrze by było też dorobić brakujące podsieci do wypełnienia podsieci nadrzędnej (tylko w przypadku, gdy istnieje jakaś podsieć zawierająca się w nadrzędnej), np:
 
->212.106.160.0/20 Przydzial nr 2
->	212.106.160.0/21 Oddzial zdalny
+>```212.106.160.0/20 Przydzial nr 2
+>	212.106.160.0/21 Oddzial zdalny```
 Powinno zostać rozwinięte do:
 
 >```212.106.160.0/20 Przydzial nr 2
