@@ -7,15 +7,18 @@
 
 
 #include "headers/address.hpp"
-using namespace std;
+
+//using namespace std;
 
 int main()
 {
-	string addresses("2a01:1d8:2:280::/58");
-	bitset<16> bitset1(string("1011"));
-	bitset<16> bitset2(45035);
-	cout << bitset1 << endl;
-	cout << bitset2 << endl;
-	cout << hex << bitset2.to_ulong() << endl;
+	std::string full_address1("2a01:1d8:2:280::/58");
+	std::bitset<16> bitset1(std::string("1110"));
+	std::bitset<16> bitset2(45035);
+	std::cout << bitset1 << std::endl;
+	std::cout << bitset2 << std::endl;
+	std::cout << std::hex << bitset2.to_ulong() << std::endl;
+	std::cout << full_address1 << std::endl;
+	std::cout << std::dec << full_address1.size() << std::endl;
 	return 0;
 }
