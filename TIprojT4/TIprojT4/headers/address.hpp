@@ -40,5 +40,4 @@ class Address
 		void str_to_bin(); //String to binary mode in bitset
 		void print_entire_address(int opt); //If opt == 16 then address will have hex format.
 };
-
 #endif //ADDRESS_HPP
