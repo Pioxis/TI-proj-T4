@@ -6,14 +6,14 @@ void Address::gmfs(std::string one_line)
 	{
 		std::string slash = "/";
 		std::string s_mask;
-		unsigned int slashyk = one_line.find_first_of(slash); //Wyszukiwanie slasha i potem wyłuskiwanie maski, która jest za nim
+		unsigned int slashyk = one_line.find_first_of(slash); //Find slash and get mask
 		unsigned int j;
 		for( j = slashyk + 1; j < ((slashyk + 1) + 3); j++ )
 		{
 			if(one_line[j] != ' ')
 				s_mask += one_line[j];
 		}
-			mask = std::stoi(s_mask); //Wpisanie wartości maski do wartosci obiektu
+		mask = std::stoi(s_mask); //Get mask value to object parameter
 		std::string temp_comm;
 		for ( unsigned int k = j; k < one_line.length(); k++ )
 		{
@@ -120,7 +120,6 @@ void Address::split_addr()
 		std::string temp_Str_addr = addr_ff;
 		temp_Str_addr.erase(remove(temp_Str_addr.begin(), temp_Str_addr.end(), '\t'),
 							temp_Str_addr.end()); //remove TAB from string
-
 		std::stringstream temp_Str_addr2;
 		temp_Str_addr2.str(temp_Str_addr);
 		while ( std::getline(temp_Str_addr2, segment, ':') ) //Split stringstream to segments of IPv6 addr
@@ -173,11 +172,11 @@ void Address::print_entire_address(int opt)
 		int max_seg = sizeof(binary_seg) / sizeof(binary_seg[0]);
 		for ( int i = 0; i < max_seg; i++ )
 			{
-			std::cout.fill('0');
-			std::cout.width(4);
-			std::cout << std::hex << binary_seg[i].to_ulong();
-			if ( i != max_seg - 1 )
-				std::cout << ":";
+				std::cout.fill('0');
+				std::cout.width(4);
+				std::cout << std::hex << binary_seg[i].to_ulong();
+				if ( i != max_seg - 1 )
+					std::cout << ":";
 			}
 		std::cout << std::dec << "/" << mask;
 		}
@@ -186,10 +185,91 @@ void Address::print_entire_address(int opt)
 		int max_seg = sizeof(binary_seg) / sizeof(binary_seg[0]);
 		for ( int i = 0; i < max_seg; i++ )
 			{
-			std::cout << binary_seg[i];
+				std::cout << binary_seg[i];
+				if ( i != max_seg - 1 )
+					std::cout << ":";
+			}
+		std::cout << "/" << mask;
+		}
+	}
+
+void Address::iMask_to_bMask(int iMask)
+	{
+		int counter = 0;
+		int tempBmask[128] = {0};
+		for( int i = 0; i < iMask; i++)
+			tempBmask[i] = 1;
+		for(auto & s : bin_mask)
+			{
+				for(int m = 15; m>=0; m--)
+					{
+						if(tempBmask[counter] == 1)
+								s.set(m);
+						counter++;
+					}
+			}
+	}
+
+void Address::corrSubAddr()
+	{
+		for(int i = 0; i < 8; i++)
+			{
+				sub_addr[i] = binary_seg[i];
+				sub_addr[i] &= bin_mask[i];
+			}
+	}
+
+void Address::print_subnet(int opt)
+	{
+	if( opt == 16 )
+		{
+		int max_seg = sizeof(sub_addr) / sizeof(sub_addr[0]);
+		for ( int i = 0; i < max_seg; i++ )
+			{
+			std::cout.fill('0');
+			std::cout.width(4);
+			std::cout << std::hex << sub_addr[i].to_ulong();
+			if ( i != max_seg - 1 )
+				std::cout << ":";
+			}
+		std::cout << std::dec << "/" << mask;
+		}
+	else
+		{
+		int max_seg = sizeof(sub_addr) / sizeof(sub_addr[0]);
+		for ( int i = 0; i < max_seg; i++ )
+			{
+			std::cout << sub_addr[i];
 			if ( i != max_seg - 1 )
 				std::cout << ":";
 			}
 		std::cout << "/" << mask;
+		}
+	}
+
+void Address::print_mask(int opt)
+	{
+	if( opt == 16 )
+		{
+		int max_seg = sizeof(bin_mask) / sizeof(bin_mask[0]);
+		for ( int i = 0; i < max_seg; i++ )
+			{
+			std::cout.fill('0');
+			std::cout.width(4);
+			std::cout << std::hex << bin_mask[i].to_ulong();
+			if ( i != max_seg - 1 )
+				std::cout << ":";
+			}
+		std::cout << std::dec;
+		}
+	else
+		{
+		int max_seg = sizeof(bin_mask) / sizeof(bin_mask[0]);
+		for ( int i = 0; i < max_seg; i++ )
+			{
+			std::cout << bin_mask[i];
+			if ( i != max_seg - 1 )
+				std::cout << ":";
+			}
 		}
 	}

@@ -24,6 +24,8 @@ class Address
 		std::string comment;
 		std::vector<std::string> all_segm_str;
 		std::bitset<16> binary_seg[8];
+		std::bitset<16> bin_mask[8];
+		std::bitset<16> sub_addr[8]; //address after correction from normal address to subnet address
 
 	public:
 		virtual ~Address();
@@ -39,5 +41,9 @@ class Address
 		void split_addr();
 		void str_to_bin(); //String to binary mode in bitset
 		void print_entire_address(int opt); //If opt == 16 then address will have hex format.
+		void iMask_to_bMask(int iMask);
+		void corrSubAddr(); //If addr is not subnet addr then change it to subnet addr
+		void print_subnet(int opt);
+		void print_mask(int opt);
 };
 #endif //ADDRESS_HPP

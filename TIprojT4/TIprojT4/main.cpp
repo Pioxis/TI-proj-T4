@@ -5,6 +5,9 @@
 //		First address ff00:: || Last adress ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
 #include "headers/address.hpp"
 
+#define HEX_N 16
+#define BIN_N 2
+
 int main()
 	{
 		std::ifstream myFile("addresstab.txt");
@@ -27,16 +30,28 @@ int main()
 		myFile.seekg(0);
 		myFile.close();
 
-		for( int i = 0; i < wszystkie_adresy.size(); i++ )
+		for(auto & i : wszystkie_adresy)
 		{
-			std::cout << i + 1 << ". Maska: " << wszystkie_adresy[i].printMask() << std::endl;
-			wszystkie_adresy[i].split_addr();
-			wszystkie_adresy[i].dd_is();
-			std::cout << "Ilość oktetów po lewej stronie: " << wszystkie_adresy[i].widd_left() << " || po prawej stronie: " << wszystkie_adresy[i].widd_right() << std::endl;
-			wszystkie_adresy[i].str_to_bin();
-			wszystkie_adresy[i].print_entire_address(16);
-			std::cout << std::endl;
+			i.split_addr();
+			i.dd_is();
+			i.widd_left();
+			i.widd_right();
+			i.str_to_bin();
+			i.iMask_to_bMask(i.printMask());
+			i.corrSubAddr();
 		}
-
+		for( int i = 0; i < wszystkie_adresy.size(); i++)
+			{
+				std::cout << i + 1 << ". Maska: " << wszystkie_adresy[i].printMask() << std::endl;
+				std::cout << "Address: ";
+				wszystkie_adresy[i].print_entire_address(HEX_N);
+				std::cout << std::endl;
+				std::cout << "Mask: ";
+				wszystkie_adresy[i].print_mask(HEX_N);
+				std::cout << std::endl;
+				std::cout << "Subnet: ";
+				wszystkie_adresy[i].print_subnet(HEX_N);
+				std::cout << std::endl;
+			}
 		return 0;
 	}
