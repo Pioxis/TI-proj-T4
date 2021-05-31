@@ -1,2 +1,4 @@
 # TI-proj-T4
-Projekt uczelniany
+Project for The Silesian Technical University. 
+Implemented under Internet Technology.
+Third party person can continue it.
