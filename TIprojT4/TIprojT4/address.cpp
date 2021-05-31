@@ -221,17 +221,29 @@ void Address::corrSubAddr()
 
 void Address::print_subnet(int opt)
 	{
+	std::stringstream temp;
+	std::string temp2;
 	if( opt == 16 )
 		{
 		int max_seg = sizeof(sub_addr) / sizeof(sub_addr[0]);
 		for ( int i = 0; i < max_seg; i++ )
 			{
+			temp.str(std::string());
+			subnet_string += sub_addr[i].to_string();
 			std::cout.fill('0');
 			std::cout.width(4);
 			std::cout << std::hex << sub_addr[i].to_ulong();
+			temp << std::hex << sub_addr[i].to_ulong();
+			temp2 = temp.str();
+			subnet_string_hex += temp2;
+
 			if ( i != max_seg - 1 )
 				std::cout << ":";
+				subnet_string += ':';
+				subnet_string_hex += ':';
+				//temp2 = "";
 			}
+
 		std::cout << std::dec << "/" << mask;
 		}
 	else
@@ -273,3 +285,100 @@ void Address::print_mask(int opt)
 			}
 		}
 	}
+
+void Address::set_ID(int pID)
+	{
+		id = pID;
+	}
+
+int Address::get_ID() const
+	{
+		return id;
+	}
+
+void Address::tabs_c() //How many tabs
+	{
+		int count_tab = 0;
+		for(char i : addr_ff)
+			{
+				if(i == '\t')
+					{
+						count_tab++;
+					}
+			}
+		tabs = count_tab;
+	}
+
+void Address::set_root()
+	{
+		if(tabs == 0)
+			{
+				root = true;
+				master = true;
+			}
+		else
+			{
+				root = false;
+			}
+	}
+int Address::get_tabs() const
+	{
+		return tabs;
+	}
+
+void Address::set_master()
+	{
+		master = true;
+	}
+
+void Address::set_my_master(int id_m)
+	{
+		my_master_id = id_m;
+	}
+
+int Address::get_my_master_ID() const
+	{
+		return my_master_id;
+	}
+
+std::string Address::get_substr()
+	{
+		return subnet_string;
+	}
+
+void Address::check_submask(Address& prevAddr)
+	{
+		if(!root)
+		{
+			if(prevAddr.id == my_master_id)
+			{
+				if(prevAddr.mask >= mask)
+					{
+						std::cout << "Maska: [" << mask << "] adresu nr [" << id
+						<< "] jest nieprawidłowa. Niższa lub równa masce adresu nr [" <<prevAddr.id << "] nadrzędnej: ["
+						<< prevAddr.mask << "]." << std::endl;
+						error = true;
+					}
+			}
+		}
+		else
+			{
+				error = false;
+			}
+	}
+
+bool Address::get_error_state() const
+	{
+		return error;
+	}
+
+std::string Address::get_comment() const
+	{
+		return comment;
+	}
+
+std::string Address::get_sub_str_hex() const
+	{
+		return subnet_string_hex;
+	}
+
