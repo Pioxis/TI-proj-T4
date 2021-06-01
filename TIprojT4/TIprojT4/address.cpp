@@ -31,7 +31,7 @@ bool Address::corrMask()
 			std::cout << addr_ff << std::endl;
 			std::cout << "Maska musi być w zakresie od 0 do 128" << std::endl;
 			std::cin >> mask;
-			std::cin.clear();
+			std::cin.clear(); //Clear buffor
 			std::cout << "Twoja nowa maska: " << mask << std::endl;
 			return false;
 		}
@@ -238,10 +238,11 @@ void Address::print_subnet(int opt)
 			subnet_string_hex += temp2;
 
 			if ( i != max_seg - 1 )
-				std::cout << ":";
-				subnet_string += ':';
-				subnet_string_hex += ':';
-				//temp2 = "";
+				{
+					std::cout << ":";
+					subnet_string += ':';
+					subnet_string_hex += ':';
+				}
 			}
 
 		std::cout << std::dec << "/" << mask;
@@ -259,6 +260,34 @@ void Address::print_subnet(int opt)
 		}
 	}
 
+void Address::print_subnet_only(int opt)
+	{
+		if( opt == 16 )
+			{
+			int max_seg = sizeof(sub_addr) / sizeof(sub_addr[0]);
+			for ( int i = 0; i < max_seg; i++ )
+				{
+					std::cout.fill('0');
+					std::cout.width(4);
+					std::cout << std::hex << sub_addr[i].to_ulong();
+					if ( i != max_seg - 1 )
+						std::cout << ":";
+				}
+			std::cout << std::dec << "/" << mask;
+			}
+		else
+			{
+			int max_seg = sizeof(sub_addr) / sizeof(sub_addr[0]);
+			for ( int i = 0; i < max_seg; i++ )
+				{
+				std::cout << sub_addr[i];
+				if ( i != max_seg - 1 )
+					std::cout << ":";
+				}
+			std::cout << "/" << mask;
+			}
+	}
+
 void Address::print_mask(int opt)
 	{
 	if( opt == 16 )
@@ -272,7 +301,7 @@ void Address::print_mask(int opt)
 			if ( i != max_seg - 1 )
 				std::cout << ":";
 			}
-		std::cout << std::dec;
+		std::cout << std::dec; //Get back to default mode
 		}
 	else
 		{
@@ -353,12 +382,12 @@ void Address::check_submask(Address& prevAddr)
 			if(prevAddr.id == my_master_id)
 			{
 				if(prevAddr.mask >= mask)
-					{
-						std::cout << "Maska: [" << mask << "] adresu nr [" << id
-						<< "] jest nieprawidłowa. Niższa lub równa masce adresu nr [" <<prevAddr.id << "] nadrzędnej: ["
-						<< prevAddr.mask << "]." << std::endl;
-						error = true;
-					}
+				{
+					std::cout << "Maska: [" << mask << "] adresu nr [" << id
+					<< "] jest nieprawidłowa. Niższa lub równa masce adresu nr [" <<prevAddr.id << "] nadrzędnej: ["
+					<< prevAddr.mask << "]." << std::endl;
+					error = true;
+				}
 			}
 		}
 		else
@@ -381,4 +410,3 @@ std::string Address::get_sub_str_hex() const
 	{
 		return subnet_string_hex;
 	}
-

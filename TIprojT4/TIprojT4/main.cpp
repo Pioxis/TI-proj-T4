@@ -1,12 +1,7 @@
-//example IPv6 address 2001:0db8:85a3:0000:0000:8a2e:0370:7334
-//If mask /0 then 2^128 = 340282366920938463463374607431768211456 hosts (no mask)
-//		First address :: || Last address ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
-//If mask /8 then 2^(128-8)=2^120= 1329227995784915872903807060280344576 hosts
-//		First address ff00:: || Last address ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+/* Skład sekcji: Piotr Cała, Aleksander Nowak, Mariusz Pawełkiewicz, Patryk Zawadzki, Oskar Czaja */
 #include "headers/address.hpp"
 
-#define HEX_N 16
-#define BIN_N 2
+#define HEX_N 16 //Just for test of printing binnary representation of addr. For default and full working app HEX_N = 16
 
 int main()
 	{
@@ -46,12 +41,12 @@ int main()
 			wszystkie_adresy[i].set_root();
 			if( wszystkie_adresy[i-1].get_tabs() < wszystkie_adresy[i].get_tabs() )
 				{
-				wszystkie_adresy[i].set_my_master(wszystkie_adresy[i-1].get_ID());
-				wszystkie_adresy[i-1].set_master();
+					wszystkie_adresy[i].set_my_master(wszystkie_adresy[i-1].get_ID());
+					wszystkie_adresy[i-1].set_master();
 				}
 			else if( wszystkie_adresy[i-1].get_tabs() == wszystkie_adresy[i].get_tabs() )
 				{
-				wszystkie_adresy[i].set_my_master(wszystkie_adresy[i-1].get_my_master_ID());
+					wszystkie_adresy[i].set_my_master(wszystkie_adresy[i-1].get_my_master_ID());
 				}
 		}
 		for( int i = 0; i < wszystkie_adresy.size(); i++ )
@@ -65,9 +60,8 @@ int main()
 				std::cout << std::endl;
 				std::cout << "Subnet: ";
 				wszystkie_adresy[i].print_subnet(HEX_N);
-				std::cout << std::endl;
+				std::cout << std::endl << std::endl;
 			}
-
 			//Logic
 					//Check same addr
 			for(int lstr = 0; lstr < wszystkie_adresy.size(); lstr++)
@@ -78,11 +72,11 @@ int main()
 						{
 							std::cout << "Przydzielony adres:" << std::endl << "[" << wszystkie_adresy[lstr].get_ID()
 									  << "] ";
-							wszystkie_adresy[lstr].print_subnet(HEX_N);
+							wszystkie_adresy[lstr].print_subnet_only(HEX_N);
 							std::cout << std::endl;
 							std::cout << "jest taki sam jak: " << std::endl;
 							std::cout << "[" << wszystkie_adresy[i].get_ID() << "] ";
-							wszystkie_adresy[i].print_subnet(HEX_N);
+							wszystkie_adresy[i].print_subnet_only(HEX_N);
 							std::cout << std::endl;
 						}
 					}
@@ -95,30 +89,27 @@ int main()
 					}
 				}
 	//Save to file
-
 	std::ofstream outFile;
-	//std::ifstream outFile(output_string);
 	outFile.open(output_string);
 	outFile.seekp(0);
-	for(int x = 0; x < wszystkie_adresy.size(); x++)
+	for(auto & x : wszystkie_adresy)
 		{
-			if(wszystkie_adresy[x].get_error_state())
+			if(x.get_error_state())
 				{
 					std::cout << "Popraw plik wejściowy i włącz program ponownie" << std::endl;
-					//return 0;
+					return 0;
 				}
 			else
 				{
-					for(int i = 0; i < wszystkie_adresy[x].get_tabs(); i++)
+					for(int i = 0; i < x.get_tabs(); i++)
 						{
 							outFile << '\t';
 						}
-						outFile << wszystkie_adresy[x].get_sub_str_hex() << "\\" << wszystkie_adresy[x].printMask()
-						<< " " << wszystkie_adresy[x].get_comment() << std::endl;
+						outFile << x.get_sub_str_hex() << "\\" << x.printMask()
+						<< " " << x.get_comment() << std::endl;
 						outFile.clear();
 				}
 		}
 	outFile.close();
-
 		return 0;
 	}
