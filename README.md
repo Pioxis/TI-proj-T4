@@ -1,6 +1,8 @@
 # TI-proj-T4
 The Silesian Technical University project created as part of the Internet Technologies subject.
 
+Progam was developed under Ubuntu 20.10 - 64bit. Works with IDE Clion from JetBrains.
+
 Temat projektu nr 4: Narzędzie do organizacji podziałów podsieci IPv6.
 
 Narzędzie tekstowe do przeglądania plików zawierających listę podziałów adresów IP na mniejsze podsieci. Przykład pliku wejściowego:
