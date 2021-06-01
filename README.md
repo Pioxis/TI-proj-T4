@@ -29,7 +29,7 @@ Powinno zostać rozwinięte do:
 >```212.106.160.0/20 Przydzial nr 2
 >	212.106.160.0/21 Oddzial zdalny
 >	212.106.168.0/21 WOLNA```
->
+
 Project for The Silesian Technical University. 
-Implemented under Internet Technology.
+Implemented under Internet Technology. 
 Third party person can continue it.
