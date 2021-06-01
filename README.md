@@ -35,7 +35,7 @@ Powinno zostać rozwinięte do:
 
 Zawartość pliku źródłowego / Input file: addresstab.txt
 
->2a01:1d8:2:280::/49 jakis komentarz
+>```2a01:1d8:2:280::/49 jakis komentarz
 >	2a01:1d8:3:280::/51 jakis komentarz
 >	2a01:1d8:32:280::/54 jakis komentarz
 >	2a01:1d8:4:280::/130 jakis komentarz
@@ -44,7 +44,7 @@ Zawartość pliku źródłowego / Input file: addresstab.txt
 >	2a01:1d8:32:280::/53 jakis komentarz
 >	2a01:1d8:2:280::/78 jakis komentarz
 >	2001:0db8:85a3:0000:0000:8a2e:037e:73c4/64 jakis komentarz dwa
->	::85a3:0000:0000:8a2e:0370:7334/111 jakis komentarz dwa
+>	::85a3:0000:0000:8a2e:0370:7334/111 jakis komentarz dwa```
 
 
 
