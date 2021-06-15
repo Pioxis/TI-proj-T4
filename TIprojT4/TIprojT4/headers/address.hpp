@@ -40,7 +40,7 @@ class Address
 		void get_tmp_adr(std::string tmp_String_Addr); //Get temp address from source file to object parameter
 		void dd_is(); //Check to IP is address with double ":" -> "::"
 		int widd_left(); /*Where is double dot from left side, returns how many octets are before "::".
-		If dd_is == false, then going to else with full addr func.*/
+		If dd_is == false, then going to "else" with full addr func.*/
 		int widd_right(); /*Where is double dot from left side, returns how many octets are after "::".
 		Used when dd_is == true.*/
 		void split_addr(); //Split string full addr to hex segments
@@ -57,10 +57,10 @@ class Address
 		void set_root(); //To set bool variable root
 		int get_tabs() const; //Get value from tabs var for formating end file
 		void set_master(); //Set variable master
-		void set_my_master(int id_m); //Set variable my_master id
+		void set_my_master(int id_m); //Set variable my_master "id"
 		int get_my_master_ID() const; //Get value of my_master_id
 		std::string get_substr(); //Get value of string with subnet address
-		void check_submask(Address& prevAddr); //If mask of master is higher then set error true
+		void check_submask(Address& prevAddr); //If mask of master is higher, then set error true
 		bool get_error_state() const; //Get value of bool var
 		std::string get_comment() const; //Get value of comment value - string var
 		std::string get_sub_str_hex() const; //Get value of subnet address with hex version

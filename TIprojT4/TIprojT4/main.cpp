@@ -105,7 +105,7 @@ int main()
 						{
 							outFile << '\t';
 						}
-						outFile << x.get_sub_str_hex() << "\\" << x.printMask()
+						outFile << x.get_sub_str_hex() << "/" << x.printMask()
 						<< " " << x.get_comment() << std::endl;
 						outFile.clear();
 				}
